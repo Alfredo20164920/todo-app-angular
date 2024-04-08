@@ -23,7 +23,7 @@
               <div class="view">
                 <input class="toggle" type="checkbox" [checked]="task.completed" (change)="toggleCompleted(i)" />
                 <label (dblclick)="editingMode(i)"  >{{task.title}}</label>
-                <button class="destroy"></button>
+                <button class="destroy" (click)="deleteTask(i)"></button>
               </div>
               <input class="edit" [autofocus]="task.editing" [value]="task.title" (keydown.enter)="updateTask($event, i)" (keydown.esc)="exitEditingMode()" />
             </li>
