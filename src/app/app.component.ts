@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { TaskService } from './services/task.service';
 
 @Component({
   selector: 'app-root',
@@ -7,13 +8,11 @@ import { RouterOutlet } from '@angular/router';
   imports: [RouterOutlet],  
   template: "<router-outlet/>"
 })
-export class AppComponent {
-  title = 'todoApp';
-  welcome = "Bienvenido a la aplicación de Angular";
-  tasks = [
-    "Instalar Angular",
-    "Crear proyecto",
-    "Crear component",
-    "Crear servicio"
-  ]
+export class AppComponent implements OnInit {
+  private _task = inject(TaskService);
+  tasks = this._task.tasks;
+  
+  ngOnInit(): void {
+    this._task.get();
+  }
 }
