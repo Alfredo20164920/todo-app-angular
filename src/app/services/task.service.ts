@@ -1,4 +1,4 @@
-import { Injectable, Injector, effect, inject, signal } from '@angular/core';
+import { Injectable, Injector, OnInit, effect, inject, signal } from '@angular/core';
 import { Task } from '../models/task.model';
 
 @Injectable({
@@ -7,7 +7,8 @@ import { Task } from '../models/task.model';
 export class TaskService {
   tasks = signal<Task[]>([]);
   injector = inject(Injector);
-  constructor() { }
+
+  taskLegth = signal(this.tasks().length)
 
   get() {
     const st = localStorage.getItem("mydayapp-angular");
@@ -31,7 +32,7 @@ export class TaskService {
 
     const newTitle = this.formatTask(title);
 
-    if(title !== "") {
+    if(newTitle !== "") {
       const newTask: Task = {
         id: Date.now().toString(),
         title: newTitle,
