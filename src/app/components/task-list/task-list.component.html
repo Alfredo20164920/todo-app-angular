@@ -1,0 +1,18 @@
+
+@if(tasks().length > 0) {
+    <section class="main">
+        <ul class="todo-list">
+            @for(task of tasks(); track task.id; let i = $index) {
+                <li [class.completed]="task.completed" [class.editing]="task.editing">
+                    <div class="view">
+                        <input class="toggle" type="checkbox" [checked]="task.completed" (change)="toggleCompleted(i)" />
+                        <label (dblclick)="editingMode(i)">{{task.title}}</label>
+                        <button class="destroy" (click)="deleteTask(i)"></button>
+                    </div>
+                    <input class="edit" [autofocus]="task.editing" [value]="task.title" (keydown.enter)="updateTask($event, i)"
+                        (keydown.esc)="exitEditingMode()" />
+                </li>
+            }
+        </ul>
+    </section>
+}
