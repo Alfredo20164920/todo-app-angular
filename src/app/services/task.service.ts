@@ -1,5 +1,11 @@
-import { Injectable, Injector, OnInit, effect, inject, signal } from '@angular/core';
+import { Injectable, Injector, Input, OnInit, computed, effect, inject, signal } from '@angular/core';
 import { Task } from '../models/task.model';
+
+export enum Filters {
+  COMPLETED = 'completed', 
+  ALL = 'all',
+  PENDING = 'pending'
+}
 
 @Injectable({
   providedIn: 'root'
@@ -8,7 +14,16 @@ export class TaskService {
   tasks = signal<Task[]>([]);
   injector = inject(Injector);
 
-  taskLegth = signal(this.tasks().length)
+  tasksFilter = signal<Task[]>([]);
+  filterChange = signal<Filters>(Filters.ALL);
+
+  setFilterTasks(newTasks: Task[]) {
+    this.tasksFilter.update((prev) => [...newTasks])
+  }
+
+  setFilterChange(filter: Filters) {
+    this.filterChange.set(filter);
+  }
 
   get() {
     const st = localStorage.getItem("mydayapp-angular");
@@ -71,6 +86,10 @@ export class TaskService {
 
   formatTask(title: string | null): string {
     return title?.trim() || "";
+  }
+
+  deleteCompleted() {
+    this.tasks.update((tasks: Task[]) => tasks.filter((tasks) => tasks.completed !== true))
   }
 
 }

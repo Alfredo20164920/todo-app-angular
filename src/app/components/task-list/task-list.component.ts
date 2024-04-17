@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, Input, OnInit, inject } from '@angular/core';
+import { Component, Input, OnInit, inject, signal } from '@angular/core';
 import { TaskService } from '../../services/task.service';
 import { Task } from '../../models/task.model';
 
@@ -9,20 +9,11 @@ import { Task } from '../../models/task.model';
   imports: [CommonModule],
   templateUrl: './task-list.component.html',
 })
-export class TaskListComponent implements OnInit {
+export class TaskListComponent {
   private taskService = inject(TaskService);
   tasks = this.taskService.tasks;
 
   @Input() tasksList!: Task[];
-
-  constructor() {
-    console.log(this.tasks());
-  }
-
-  ngOnInit(): void {
-    this.taskService.get();
-  }
-
 
   toggleCompleted(index: number): void {
     this.tasks.update( (tasks: Task[]) => {
