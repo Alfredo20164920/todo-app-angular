@@ -10,9 +10,14 @@ export const routes: Routes = [
     component: LayoutComponent,
     children: [
       {
-        path: "",
+        path: ":filter",
         component: HomeComponent,
         pathMatch: 'full'
+      },
+      {
+        path: "",
+        redirectTo: "/all",
+        pathMatch: "full"
       }
     ]
   }

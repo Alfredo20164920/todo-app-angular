@@ -2,7 +2,7 @@
 @if(tasks().length > 0) {
     <section class="main">
         <ul class="todo-list">
-            @for(task of tasks(); track task.id; let i = $index) {
+            @for(task of tasksList; track task.id; let i = $index) {
                 <li [class.completed]="task.completed" [class.editing]="task.editing">
                     <div class="view">
                         <input class="toggle" type="checkbox" [checked]="task.completed" (change)="toggleCompleted(i)" />
